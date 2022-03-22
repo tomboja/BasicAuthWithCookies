@@ -12,6 +12,8 @@ const authentication = (req, res, next) => {
 
       // Assuming username is 'admin' and password is 'password'
       if (credentials[0] === 'admin' && credentials[1] === 'password') {
+        // send cookie to client so that the client saves the cookie 
+        // it uses with subsiquent requests
         res.cookie('user', 'admin', { signed: true })
         next()
       } else {
@@ -26,7 +28,7 @@ const authentication = (req, res, next) => {
       next()
     } else {
       res.setHeader('WWW-Authenticate', 'Basic')
-      const message = 'User does not have correct credentials'
+      const message = 'User is not admin. You are different person than admin'
       authError(next, message, 403)
     }
   }
